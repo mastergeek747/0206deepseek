@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>영어 회화 마스터</title>
+  <title>다국어 회화 마스터</title>
   <style>
     body {
       font-family: 'Arial', sans-serif;
@@ -33,6 +33,8 @@
       font-size: 1.5rem;
       margin: 1rem 0;
       color: #333;
+      cursor: pointer;
+      text-decoration: underline;
     }
     .translation {
       font-size: 1.2rem;
@@ -80,188 +82,71 @@
 </head>
 <body>
   <div class="container">
-    <h1>영어 회화 마스터</h1>
-    <div class="phrase" id="phrase">Hello, how are you?</div>
-    <div class="translation" id="translation">안녕하세요, 어떻게 지내세요?</div>
+    <h1>다국어 회화 마스터</h1>
+    <div class="phrase" id="phrase" onclick="nextPhrase()">こんにちは</div>
+    <div class="translation" id="translation">안녕하세요</div>
     <div class="buttons">
-      <button onclick="nextPhrase()">다음 표현</button>
       <button onclick="speakPhrase()">발음 듣기</button>
     </div>
     <div class="quiz">
-      <div class="quiz-question" id="quizQuestion">퀴즈: "Hello, how are you?"의 뜻은?</div>
+      <div class="quiz-question" id="quizQuestion">퀴즈: "こんにちは"의 뜻은?</div>
       <div class="quiz-options" id="quizOptions">
-        <button onclick="checkAnswer('안녕하세요, 어떻게 지내세요?')">안녕하세요, 어떻게 지내세요?</button>
-        <button onclick="checkAnswer('안녕히 가세요')">안녕히 가세요</button>
+        <button onclick="checkAnswer('안녕하세요')">안녕하세요</button>
         <button onclick="checkAnswer('고마워요')">고마워요</button>
+        <button onclick="checkAnswer('안녕히 가세요')">안녕히 가세요</button>
       </div>
     </div>
   </div>
 
   <script>
     const phrases = [
+      // 영어 회화
       { phrase: "Hello, how are you?", translation: "안녕하세요, 어떻게 지내세요?", language: "영어" },
       { phrase: "What's your name?", translation: "이름이 뭐예요?", language: "영어" },
       { phrase: "Where are you from?", translation: "어디에서 왔어요?", language: "영어" },
       { phrase: "Nice to meet you!", translation: "만나서 반가워요!", language: "영어" },
       { phrase: "How much is this?", translation: "이거 얼마예요?", language: "영어" },
-      { phrase: "Can you help me?", translation: "도와주실 수 있나요?", language: "영어" },
-      { phrase: "I'm sorry.", translation: "죄송합니다.", language: "영어" },
-      { phrase: "Thank you very much.", translation: "정말 감사합니다.", language: "영어" },
-      { phrase: "You're welcome.", translation: "천만에요.", language: "영어" },
-      { phrase: "Excuse me.", translation: "실례합니다.", language: "영어" },
-      { phrase: "What time is it?", translation: "지금 몇 시예요?", language: "영어" },
-      { phrase: "Where is the restroom?", translation: "화장실은 어디에 있나요?", language: "영어" },
-      { phrase: "I don't understand.", translation: "이해가 안 돼요.", language: "영어" },
-      { phrase: "Can you repeat that?", translation: "다시 말씀해 주실 수 있나요?", language: "영어" },
-      { phrase: "I need help.", translation: "도움이 필요해요.", language: "영어" },
-      { phrase: "How do you say this in English?", translation: "이걸 영어로 어떻게 말하나요?", language: "영어" },
-      { phrase: "I'm hungry.", translation: "배고파요.", language: "영어" },
-      { phrase: "I'm thirsty.", translation: "목말라요.", language: "영어" },
-      { phrase: "I'm tired.", translation: "피곤해요.", language: "영어" },
-      { phrase: "I'm happy.", translation: "행복해요.", language: "영어" },
-      { phrase: "I'm sad.", translation: "슬퍼요.", language: "영어" },
-      { phrase: "I'm excited.", translation: "기대돼요.", language: "영어" },
-      { phrase: "I'm nervous.", translation: "긴장돼요.", language: "영어" },
-      { phrase: "I'm bored.", translation: "지루해요.", language: "영어" },
-      { phrase: "I'm ready.", translation: "준비됐어요.", language: "영어" },
-      { phrase: "I love you.", translation: "사랑해요.", language: "영어" },
-      { phrase: "I miss you.", translation: "보고 싶어요.", language: "영어" },
-      { phrase: "I like it.", translation: "맘에 들어요.", language: "영어" },
-      { phrase: "I don't like it.", translation: "맘에 안 들어요.", language: "영어" },
-      { phrase: "It's delicious.", translation: "맛있어요.", language: "영어" },
-      { phrase: "It's too spicy.", translation: "너무 매워요.", language: "영어" },
-      { phrase: "It's too sweet.", translation: "너무 달아요.", language: "영어" },
-      { phrase: "It's too salty.", translation: "너무 짜요.", language: "영어" },
-      { phrase: "It's too sour.", translation: "너무 셔요.", language: "영어" },
-      { phrase: "It's too bitter.", translation: "너무 써요.", language: "영어" },
-      { phrase: "It's hot.", translation: "더워요.", language: "영어" },
-      { phrase: "It's cold.", translation: "추워요.", language: "영어" },
-      { phrase: "It's raining.", translation: "비가 와요.", language: "영어" },
-      { phrase: "It's snowing.", translation: "눈이 와요.", language: "영어" },
-      { phrase: "It's sunny.", translation: "날씨가 화창해요.", language: "영어" },
-      { phrase: "It's cloudy.", translation: "흐려요.", language: "영어" },
-      { phrase: "It's windy.", translation: "바람이 불어요.", language: "영어" },
-      { phrase: "I have a question.", translation: "질문이 있어요.", language: "영어" },
-      { phrase: "I have a problem.", translation: "문제가 있어요.", language: "영어" },
-      { phrase: "I have an idea.", translation: "아이디어가 있어요.", language: "영어" },
-      { phrase: "I have a suggestion.", translation: "제안이 있어요.", language: "영어" },
-      { phrase: "I have a complaint.", translation: "불만이 있어요.", language: "영어" },
-      { phrase: "I have a reservation.", translation: "예약이 있어요.", language: "영어" },
-      { phrase: "I have an appointment.", translation: "약속이 있어요.", language: "영어" },
-      { phrase: "I have a meeting.", translation: "회의가 있어요.", language: "영어" },
-      { phrase: "I have a class.", translation: "수업이 있어요.", language: "영어" },
-      { phrase: "I have a test.", translation: "시험이 있어요.", language: "영어" },
-      { phrase: "I have a job interview.", translation: "취업 면접이 있어요.", language: "영어" },
-      { phrase: "I have a flight to catch.", translation: "타야 할 비행기가 있어요.", language: "영어" },
-      { phrase: "I have a train to catch.", translation: "타야 할 기차가 있어요.", language: "영어" },
-      { phrase: "I have a bus to catch.", translation: "타야 할 버스가 있어요.", language: "영어" },
-      { phrase: "I have a car.", translation: "차가 있어요.", language: "영어" },
-      { phrase: "I have a bike.", translation: "자전거가 있어요.", language: "영어" },
-      { phrase: "I have a pet.", translation: "애완동물이 있어요.", language: "영어" },
-      { phrase: "I have a dog.", translation: "개를 키워요.", language: "영어" },
-      { phrase: "I have a cat.", translation: "고양이를 키워요.", language: "영어" },
-      { phrase: "I have a fish.", translation: "물고기를 키워요.", language: "영어" },
-      { phrase: "I have a bird.", translation: "새를 키워요.", language: "영어" },
-      { phrase: "I have a hamster.", translation: "햄스터를 키워요.", language: "영어" },
-      { phrase: "I have a rabbit.", translation: "토끼를 키워요.", language: "영어" },
-      { phrase: "I have a turtle.", translation: "거북이를 키워요.", language: "영어" },
-      { phrase: "I have a snake.", translation: "뱀을 키워요.", language: "영어" },
-      { phrase: "I have a lizard.", translation: "도마뱀을 키워요.", language: "영어" },
-      { phrase: "I have a horse.", translation: "말을 키워요.", language: "영어" },
-      { phrase: "I have a cow.", translation: "소를 키워요.", language: "영어" },
-      { phrase: "I have a pig.", translation: "돼지를 키워요.", language: "영어" },
-      { phrase: "I have a sheep.", translation: "양을 키워요.", language: "영어" },
-      { phrase: "I have a goat.", translation: "염소를 키워요.", language: "영어" },
-      { phrase: "I have a chicken.", translation: "닭을 키워요.", language: "영어" },
-      { phrase: "I have a duck.", translation: "오리를 키워요.", language: "영어" },
-      { phrase: "I have a goose.", translation: "거위를 키워요.", language: "영어" },
-      { phrase: "I have a turkey.", translation: "칠면조를 키워요.", language: "영어" },
-      { phrase: "I have a parrot.", translation: "앵무새를 키워요.", language: "영어" },
-      { phrase: "I have a pigeon.", translation: "비둘기를 키워요.", language: "영어" },
-      { phrase: "I have a crow.", translation: "까마귀를 키워요.", language: "영어" },
-      { phrase: "I have a sparrow.", translation: "참새를 키워요.", language: "영어" },
-      { phrase: "I have a seagull.", translation: "갈매기를 키워요.", language: "영어" },
-      { phrase: "I have a penguin.", translation: "펭귄을 키워요.", language: "영어" },
-      { phrase: "I have a dolphin.", translation: "돌고래를 키워요.", language: "영어" },
-      { phrase: "I have a whale.", translation: "고래를 키워요.", language: "영어" },
-      { phrase: "I have a shark.", translation: "상어를 키워요.", language: "영어" },
-      { phrase: "I have a octopus.", translation: "문어를 키워요.", language: "영어" },
-      { phrase: "I have a squid.", translation: "오징어를 키워요.", language: "영어" },
-      { phrase: "I have a crab.", translation: "게를 키워요.", language: "영어" },
-      { phrase: "I have a lobster.", translation: "랍스터를 키워요.", language: "영어" },
-      { phrase: "I have a shrimp.", translation: "새우를 키워요.", language: "영어" },
-      { phrase: "I have a clam.", translation: "조개를 키워요.", language: "영어" },
-      { phrase: "I have a oyster.", translation: "굴을 키워요.", language: "영어" },
-      { phrase: "I have a mussel.", translation: "홍합을 키워요.", language: "영어" },
-      { phrase: "I have a scallop.", translation: "가리비를 키워요.", language: "영어" },
+
+      // 중국어 회화
       { phrase: "你好", translation: "안녕하세요", language: "중국어" },
       { phrase: "你叫什么名字？", translation: "이름이 뭐예요?", language: "중국어" },
       { phrase: "你从哪里来？", translation: "어디에서 왔어요?", language: "중국어" },
       { phrase: "很高兴认识你！", translation: "만나서 반가워요!", language: "중국어" },
       { phrase: "这个多少钱？", translation: "이거 얼마예요?", language: "중국어" },
-      { phrase: "你能帮我吗？", translation: "도와주실 수 있나요?", language: "중국어" },
-      { phrase: "对不起。", translation: "죄송합니다.", language: "중국어" },
-      { phrase: "非常感谢。", translation: "정말 감사합니다.", language: "중국어" },
-      { phrase: "不客气。", translation: "천만에요.", language: "중국어" },
-      { phrase: "请问。", translation: "실례합니다.", language: "중국어" },
-      { phrase: "现在几点了？", translation: "지금 몇 시예요?", language: "중국어" },
-      { phrase: "洗手间在哪里？", translation: "화장실은 어디에 있나요?", language: "중국어" },
-      { phrase: "我不明白。", translation: "이해가 안 돼요.", language: "중국어" },
-      { phrase: "你能再说一遍吗？", translation: "다시 말씀해 주실 수 있나요?", language: "중국어" },
-      { phrase: "我需要帮助。", translation: "도움이 필요해요.", language: "중국어" },
-      { phrase: "这个用英语怎么说？", translation: "이걸 영어로 어떻게 말하나요?", language: "중국어" },
-      { phrase: "我饿了。", translation: "배고파요.", language: "중국어" },
-      { phrase: "我渴了。", translation: "목말라요.", language: "중국어" },
-      { phrase: "我累了。", translation: "피곤해요.", language: "중국어" },
-      { phrase: "我很开心。", translation: "행복해요.", language: "중국어" },
-      { phrase: "我很伤心。", translation: "슬퍼요.", language: "중국어" },
-      { phrase: "我很兴奋。", translation: "기대돼요.", language: "중국어" },
-      { phrase: "我很紧张。", translation: "긴장돼요.", language: "중국어" },
-      { phrase: "我很无聊。", translation: "지루해요.", language: "중국어" },
-      { phrase: "我准备好了。", translation: "준비됐어요.", language: "중국어" },
-      { phrase: "我爱你。", translation: "사랑해요.", language: "중국어" },
-      { phrase: "我想你。", translation: "보고 싶어요.", language: "중국어" },
-      { phrase: "我喜欢。", translation: "맘에 들어요.", language: "중국어" },
-      { phrase: "我不喜欢。", translation: "맘에 안 들어요.", language: "중국어" },
-      { phrase: "很好吃。", translation: "맛있어요.", language: "중국어" },
-      { phrase: "太辣了。", translation: "너무 매워요.", language: "중국어" },
-      { phrase: "太甜了。", translation: "너무 달아요.", language: "중국어" },
-      { phrase: "太咸了。", translation: "너무 짜요.", language: "중국어" },
-      { phrase: "太酸了。", translation: "너무 셔요.", language: "중국어" },
-      { phrase: "太苦了。", translation: "너무 써요.", language: "중국어" },
-      { phrase: "很热。", translation: "더워요.", language: "중국어" },
-      { phrase: "很冷。", translation: "추워요.", language: "중국어" },
-      { phrase: "下雨了。", translation: "비가 와요.", language: "중국어" },
-      { phrase: "下雪了。", translation: "눈이 와요.", language: "중국어" },
-      { phrase: "天气很好。", translation: "날씨가 화창해요.", language: "중국어" },
-      { phrase: "多云。", translation: "흐려요.", language: "중국어" },
-      { phrase: "有风。", translation: "바람이 불어요.", language: "중국어" }
+
+      // 일본어 회화
+      { phrase: "こんにちは", translation: "안녕하세요", language: "일본어" },
+      { phrase: "お名前は何ですか？", translation: "이름이 뭐예요?", language: "일본어" },
+      { phrase: "どこから来ましたか？", translation: "어디에서 왔어요?", language: "일본어" },
+      { phrase: "はじめまして！", translation: "만나서 반가워요!", language: "일본어" },
+      { phrase: "これはいくらですか？", translation: "이거 얼마예요?", language: "일본어" }
     ];
 
-    let currentIndex = 0;
     const phraseElement = document.getElementById('phrase');
     const translationElement = document.getElementById('translation');
     const quizQuestionElement = document.getElementById('quizQuestion');
 
     function nextPhrase() {
-      currentIndex = (currentIndex + 1) % phrases.length;
-      phraseElement.textContent = phrases[currentIndex].phrase;
-      translationElement.textContent = phrases[currentIndex].translation;
+      const randomIndex = Math.floor(Math.random() * phrases.length);
+      phraseElement.textContent = phrases[randomIndex].phrase;
+      translationElement.textContent = phrases[randomIndex].translation;
       updateQuiz();
     }
 
     function speakPhrase() {
-      const utterance = new SpeechSynthesisUtterance(phrases[currentIndex].phrase);
-      utterance.lang = phrases[currentIndex].language === "중국어" ? "zh-CN" : "en-US";
+      const currentPhrase = phrases.find(p => p.phrase === phraseElement.textContent);
+      const utterance = new SpeechSynthesisUtterance(currentPhrase.phrase);
+      utterance.lang = currentPhrase.language === "중국어" ? "zh-CN" : 
+                       currentPhrase.language === "일본어" ? "ja-JP" : "en-US"; // 언어 설정
       speechSynthesis.speak(utterance);
     }
 
     function updateQuiz() {
-      quizQuestionElement.textContent = `퀴즈: "${phrases[currentIndex].phrase}"의 뜻은?`;
+      quizQuestionElement.textContent = `퀴즈: "${phraseElement.textContent}"의 뜻은?`;
     }
 
     function checkAnswer(answer) {
-      if (answer === phrases[currentIndex].translation) {
+      if (answer === translationElement.textContent) {
         alert('정답입니다! 🎉');
       } else {
         alert('틀렸습니다. 다시 시도해보세요!');
