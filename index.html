@@ -3,158 +3,102 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>다국어 회화 마스터</title>
+  <title>간단 회화 학습기</title>
   <style>
     body {
-      font-family: 'Arial', sans-serif;
-      background-color: #f4f4f9;
-      color: #333;
       margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       height: 100vh;
+      display: grid;
+      place-items: center;
+      background: #f0f3ff;
+      font-family: '맑은 고딕', sans-serif;
     }
     .container {
       background: white;
       padding: 2rem;
-      border-radius: 10px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      max-width: 500px;
-      width: 100%;
+      border-radius: 1rem;
+      box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.1);
       text-align: center;
-    }
-    h1 {
-      color: #4a90e2;
-      margin-bottom: 1.5rem;
+      max-width: 500px;
+      width: 90vw;
     }
     .phrase {
       font-size: 1.5rem;
-      margin: 1rem 0;
-      color: #333;
+      margin: 1.5rem 0;
       cursor: pointer;
-      text-decoration: underline;
+      color: #2c3e50;
     }
     .translation {
-      font-size: 1.2rem;
-      color: #666;
+      color: #7f8c8d;
       margin-bottom: 1.5rem;
     }
-    .buttons {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-    }
-    button {
-      background-color: #4a90e2;
+    .btn {
+      background: #3498db;
       color: white;
       border: none;
-      padding: 0.75rem 1.5rem;
-      border-radius: 5px;
+      padding: 0.8rem 1.5rem;
+      border-radius: 0.5rem;
       cursor: pointer;
-      font-size: 1rem;
-      transition: background-color 0.3s ease;
+      transition: background 0.3s;
     }
-    button:hover {
-      background-color: #357abd;
+    .btn:hover { background: #2980b9; }
+    .lang-icon {
+      width: 30px;
+      height: 20px;
+      margin-left: 10px;
+      vertical-align: middle;
+      border: 1px solid #ddd;
+      border-radius: 3px;
     }
-    .quiz {
-      margin-top: 2rem;
-    }
-    .quiz-question {
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
-    }
-    .quiz-options {
+    .phrase-container {
       display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-    .quiz-options button {
-      background-color: #e0e0e0;
-      color: #333;
-    }
-    .quiz-options button:hover {
-      background-color: #d0d0d0;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>다국어 회화 마스터</h1>
-    <div class="phrase" id="phrase" onclick="nextPhrase()">こんにちは</div>
-    <div class="translation" id="translation">안녕하세요</div>
-    <div class="buttons">
-      <button onclick="speakPhrase()">발음 듣기</button>
+    <h1>간단 회화 학습기</h1>
+    <div class="phrase-container">
+      <div class="phrase" onclick="nextPhrase()">{{phrase}}</div>
+      <img id="langIcon" class="lang-icon" src="" alt="언어 아이콘">
     </div>
-    <div class="quiz">
-      <div class="quiz-question" id="quizQuestion">퀴즈: "こんにちは"의 뜻은?</div>
-      <div class="quiz-options" id="quizOptions">
-        <button onclick="checkAnswer('안녕하세요')">안녕하세요</button>
-        <button onclick="checkAnswer('고마워요')">고마워요</button>
-        <button onclick="checkAnswer('안녕히 가세요')">안녕히 가세요</button>
-      </div>
-    </div>
+    <div class="translation">{{translation}}</div>
+    <button class="btn" onclick="speakPhrase()">발음 듣기</button>
   </div>
 
-  <script>
-    const phrases = [
-      // 영어 회화
-      { phrase: "Hello, how are you?", translation: "안녕하세요, 어떻게 지내세요?", language: "영어" },
-      { phrase: "What's your name?", translation: "이름이 뭐예요?", language: "영어" },
-      { phrase: "Where are you from?", translation: "어디에서 왔어요?", language: "영어" },
-      { phrase: "Nice to meet you!", translation: "만나서 반가워요!", language: "영어" },
-      { phrase: "How much is this?", translation: "이거 얼마예요?", language: "영어" },
+<script>
+const phrases = [
+  {phrase:"Hello", trans:"안녕하세요", lang:"en", icon:"https://flagcdn.com/w20/gb.png"},
+  {phrase:"你好", trans:"안녕하세요", lang:"zh", icon:"https://flagcdn.com/w20/cn.png"},
+  {phrase:"こんにちは", trans:"안녕하세요", lang:"ja", icon:"https://flagcdn.com/w20/jp.png"},
+  {phrase:"Thank you", trans:"감사합니다", lang:"en", icon:"https://flagcdn.com/w20/gb.png"},
+  {phrase:"谢谢", trans:"감사합니다", lang:"zh", icon:"https://flagcdn.com/w20/cn.png"},
+  {phrase:"ありがとう", trans:"감사합니다", lang:"ja", icon:"https://flagcdn.com/w20/jp.png"}
+];
 
-      // 중국어 회화
-      { phrase: "你好", translation: "안녕하세요", language: "중국어" },
-      { phrase: "你叫什么名字？", translation: "이름이 뭐예요?", language: "중국어" },
-      { phrase: "你从哪里来？", translation: "어디에서 왔어요?", language: "중국어" },
-      { phrase: "很高兴认识你！", translation: "만나서 반가워요!", language: "중국어" },
-      { phrase: "这个多少钱？", translation: "이거 얼마예요?", language: "중국어" },
+const dom = {
+  phrase: document.querySelector('.phrase'),
+  trans: document.querySelector('.translation'),
+  icon: document.getElementById('langIcon')
+};
 
-      // 일본어 회화
-      { phrase: "こんにちは", translation: "안녕하세요", language: "일본어" },
-      { phrase: "お名前は何ですか？", translation: "이름이 뭐예요?", language: "일본어" },
-      { phrase: "どこから来ましたか？", translation: "어디에서 왔어요?", language: "일본어" },
-      { phrase: "はじめまして！", translation: "만나서 반가워요!", language: "일본어" },
-      { phrase: "これはいくらですか？", translation: "이거 얼마예요?", language: "일본어" }
-    ];
+const nextPhrase = () => {
+  const randomPhrase = phrases[Math.floor(Math.random()*phrases.length)];
+  dom.phrase.textContent = randomPhrase.phrase;
+  dom.trans.textContent = randomPhrase.trans;
+  dom.icon.src = randomPhrase.icon;
+};
 
-    const phraseElement = document.getElementById('phrase');
-    const translationElement = document.getElementById('translation');
-    const quizQuestionElement = document.getElementById('quizQuestion');
+const speakPhrase = () => {
+  const msg = new SpeechSynthesisUtterance(dom.phrase.textContent);
+  msg.lang = phrases.find(p => p.phrase === dom.phrase.textContent).lang;
+  speechSynthesis.speak(msg);
+};
 
-    function nextPhrase() {
-      const randomIndex = Math.floor(Math.random() * phrases.length);
-      phraseElement.textContent = phrases[randomIndex].phrase;
-      translationElement.textContent = phrases[randomIndex].translation;
-      updateQuiz();
-    }
-
-    function speakPhrase() {
-      const currentPhrase = phrases.find(p => p.phrase === phraseElement.textContent);
-      const utterance = new SpeechSynthesisUtterance(currentPhrase.phrase);
-      utterance.lang = currentPhrase.language === "중국어" ? "zh-CN" : 
-                       currentPhrase.language === "일본어" ? "ja-JP" : "en-US"; // 언어 설정
-      speechSynthesis.speak(utterance);
-    }
-
-    function updateQuiz() {
-      quizQuestionElement.textContent = `퀴즈: "${phraseElement.textContent}"의 뜻은?`;
-    }
-
-    function checkAnswer(answer) {
-      if (answer === translationElement.textContent) {
-        alert('정답입니다! 🎉');
-      } else {
-        alert('틀렸습니다. 다시 시도해보세요!');
-      }
-    }
-
-    // 초기 표현 로드
-    nextPhrase();
-  </script>
+nextPhrase(); // 초기 실행
+</script>
 </body>
 </html> 
